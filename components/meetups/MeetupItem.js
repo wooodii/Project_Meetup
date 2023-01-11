@@ -9,12 +9,11 @@ function MeetupItem(props) {
     router.push('/' + props.id) // 새 페이지를 페이지 더미에 연결
     // Link를 사용하지 않고도 페이지에  props로 주소값을 받아오면서 프로그래밍 방식으로 연결가능 
   }
-
   return (
     <li className={classes.item}>
       <Card>
         <div className={classes.image}>
-          <Image src={props.image} alt={props.title} />
+          <Image src={props.image} alt={props.title} unoptimized={true} width={200}  height={200} />
         </div>
         <div className={classes.content}>
           <h3>{props.title}</h3>

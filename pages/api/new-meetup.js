@@ -21,10 +21,10 @@ async function handler(req, res) {
         console.log(result);
         client.close();
 
-        // res로 다시 응답을 보냄 
-        res.status(201).json({message : 'Meetup inserted'}); // 성공적으로 삽입을 보냄 
+        // 데이터가 들어오면 res로 다시 응답을 보냄 
+        res.status(201).json({message : 'Meetup inserted'}); 
 
     }
 }
 
-export default handler();
+export default handler;

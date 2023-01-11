@@ -4,31 +4,6 @@ import { useEffect, useState } from 'react';
 import { MongoClient } from 'mongodb'; // 서버에서만 실행되고 클라이언트 측 코드에 포함되지 않음
 
 
-
-const dummy_meetups = [
-  {
-    id : "m1",
-    title : 'first',
-    img : 'dd',
-    adress : "dd",
-    description : 'some adress' ,
-  },
-  {
-    id : "m1",
-    title : '두번째t',
-    img : 'dd',
-    adress : "dd",
-    description : 'some adress' ,
-  },
-  {
-    id : "m1",
-    title : '세번째',
-    img : 'dd',
-    adress : "dd",
-    description : 'some adress' ,
-  },
-]
-
 function HomePage(props) {
   // const [loadedMeetups, setLoadedMeetups] = useState([]);
 
@@ -44,7 +19,7 @@ function HomePage(props) {
   // }, []);
 
   return <Layout>
-    <MeetupList meetups={props.meetups}/>
+    <MeetupList meetups={props.meetups ? props.meetups: []}/>
   </Layout> 
 }
 
@@ -64,25 +39,25 @@ export async function getStaticProps() { // 빌드타임 동안만 실행되고 
   const client = await MongoClient.connect(
     'mongodb+srv://new_user_1:rlawlgus112@cluster0.nyhewhd.mongodb.net/meetups?retryWrites=true&w=majority');
   const db = client.db(); // db를 통해서 meetupdata 가 생성
-
   const meetupsCollention = db.collection('meetups');
-  
   const meetups = await meetupsCollention.find().toArray(); // mongodb에서 데이터 fetching을 완료한 후 
   client.close(); //  연결 차단
-
+    console.log(meetups);
   return {
     props : {
       meetups : meetups.map(meetup => ({
         title : meetup.title,
-        adress : meetup.adress,
+        adress : meetup.adress ? meetup.adress :"주소없음",
         image : meetup.image,
         id : meetup._id.toString(),
       })),
     },
     revalidate : 1
-    // 이 페이지에 요청(뉴 data)이 들어오면 10초마다 서버에서 페이지를 다시 생성
+    // 이 페이지에 요청(new data)이 들어오면 10초마다 서버에서 페이지를 다시 생성
     // 3600 : 1시간  
   };
+
+
 }
 
 // 2) 동적 페이지
