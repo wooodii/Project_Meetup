@@ -1,7 +1,28 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+### 모임 일정 관리(Meetup) 사이트
+<hr/>
+Next.js + MongoDB 모임 스케줄 관리 사이트 
 
+#### 프로젝트 소개 
+<hr/>
+서버사이드 렌더링을 활용한 스케줄 데이터 
+
++ 추가하고싶은 기능 
+1) 사용자 로그인
+2) 모임 참석자 확인 기능
+3) 일주일 내 참석 일정 알림 기능
+
+#### 개발 기간
+23.01.1 ~ 23.01.12
+
+#### 개발환경 
+`HTML`, `CSS`, `Javascript`, `React`
+FrameWork : 
+Database : MongoDB
+Library : 
+
+### 프로젝트 실행 방법
 First, run the development server:
 
 ```bash
@@ -30,7 +51,6 @@ To learn more about Next.js, take a look at the following resources:
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
-
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

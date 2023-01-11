@@ -1,31 +1,43 @@
 
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 import {MongoClient, ObjectId} from 'mongodb';
+import { Fragment } from "react";
+import Head from "next/head";
 
 function MeetupDetails(props) {
     return <>
+    <Fragment>
+    <Head>
+      <title>{props.meetupData.title}</title>
+      <meta 
+        name="description" 
+        // 검색결과로 나타나는 웹 내용 
+        content={props.meetupData.description}></meta>
+    </Head>
     <MeetupDetail
         image={props.meetupData.image} 
         title={props.meetupData.title} 
         adress={props.meetupData.adress} 
         description={props.meetupData.description}/>
+    </Fragment>
     </>
 }
-
 
 export async function getStaticPaths() {
    // next.js 가 모든 동적 페이지의 pre generate가 필요함 
    // db에서 지원하는 id 패치하기
    const client = await MongoClient.connect(
        'mongodb+srv://new_user_1:rlawlgus112@cluster0.nyhewhd.mongodb.net/meetups?retryWrites=true&w=majority');
-   const db = client.db(); // db를 통해서 meetupdata 가 생성
+   
+    const db = client.db(); // db를 통해서 meetupdata 가 생성
    const meetupsCollention = db.collection('meetups');
    const meetups = await meetupsCollention.find({}, {_id :1 }).toArray();
    client.close();
 
    return {
        fallback : false , // 서버에서 요청이 들어오는 id로 페이지를 만듦(특정 path를 정의 ,ture일 경우)
-       paths : meetups.map(meetup => ({params : {meetupId : meetup._id.toString()}
+       paths : meetups.map(meetup => ({
+        params : {meetupId : meetup._id.toString()}
     })),
     }
 }
