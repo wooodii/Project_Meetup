@@ -1,6 +1,10 @@
 import MeetupList from '../components/meetups/MeetupList';
 import Layout from '../components/layout/Layout';
 import { useEffect, useState } from 'react';
+import { MongoClient } from 'mongodb'; // 서버에서만 실행되고 클라이언트 측 코드에 포함되지 않음
+
+
+
 const dummy_meetups = [
   {
     id : "m1",
@@ -24,6 +28,7 @@ const dummy_meetups = [
     description : 'some adress' ,
   },
 ]
+
 function HomePage(props) {
   // const [loadedMeetups, setLoadedMeetups] = useState([]);
 
@@ -49,11 +54,30 @@ function HomePage(props) {
 // 사전 렌더링 하기 전에 빌드 프로세스 중에 아래 코드 실행
 // 클라이언트쪽에서 업데이트가 되었을 때 모를 수 있는 문제점 : 다시 빌드해야 함 
 // 장점 : 데이터 변동이 크게 없다면, 더 빠르게 사용가능 (캐시)
-export async function getStaticProps() {
+export async function getStaticProps() { // 빌드타임 동안만 실행되고 서버에서는 실행 x
   // fetch data from an API 
+  
+  // 서버 측 코드에서도 사용할 수 있는 
+  // MongoClient.connect();
+  // 이 코드는 페이지가 pre-generated될 때 실행됨
+  
+  const client = await MongoClient.connect(
+    'mongodb+srv://new_user_1:rlawlgus112@cluster0.nyhewhd.mongodb.net/meetups?retryWrites=true&w=majority');
+  const db = client.db(); // db를 통해서 meetupdata 가 생성
+
+  const meetupsCollention = db.collection('meetups');
+  
+  const meetups = await meetupsCollention.find().toArray(); // mongodb에서 데이터 fetching을 완료한 후 
+  client.close(); //  연결 차단
+
   return {
     props : {
-      meetups : dummy_meetups
+      meetups : meetups.map(meetup => ({
+        title : meetup.title,
+        adress : meetup.adress,
+        image : meetup.image,
+        id : meetup._id.toString(),
+      })),
     },
     revalidate : 1
     // 이 페이지에 요청(뉴 data)이 들어오면 10초마다 서버에서 페이지를 다시 생성
