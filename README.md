@@ -16,6 +16,7 @@ Next.js + MongoDB 모임 스케줄 관리 사이트
 2) 모임 참석자 확인 기능
 3) 일주일 내 참석 일정 알림 기능
 4) 스케줄 삭제 기능 
+5) 
 
 ## 개발 기간
 23.01.1 ~ 23.01.12
@@ -23,9 +24,9 @@ Next.js + MongoDB 모임 스케줄 관리 사이트
 
 ## 개발환경 
 `HTML`, `CSS`, `Javascript`, `React`
-<br/>FrameWork : 
+<br/>FrameWork : react
 <br/>Database : MongoDB
-<br/>Library : 
+<br/>Library : datepicker
 
 <hr/>
 
